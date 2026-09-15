@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa Oliva | Cardápio Digital & Gastronomia Contemporânea</title>
+  
+  <!-- Fontes Google de Alto Padrão: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body data-theme="dark">
+  <!-- Barra de Notificação Superior / Ambientação -->
+  <aside class="announcement-bar">
+    <div class="announcement-content">
+      <span>✦ Experiência Gastronômica Autoral</span>
+      <span class="sep">•</span>
+      <span>Cozinha Clássica & Carta Internacional</span>
+      <span class="sep">•</span>
+      <span>Mesa em Atendimento ao Vivo</span>
+    </div>
+  </aside>
+
+  <!-- Cabeçalho Principal Sticky -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-container">
+      <div class="brand-group">
+        <div class="brand-emblem">CO</div>
+        <div class="brand-text">
+          <h1 class="brand-name">Casa Oliva</h1>
+          <span class="brand-tagline">Ristorante & Vinoteca</span>
+        </div>
+      </div>
+
+      <!-- Barra de Busca Rápida -->
+      <div class="search-wrapper">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="search" 
+          id="searchInput" 
+          class="search-input" 
+          placeholder="Buscar prato, ingrediente, vinho ou sobremesa..."
+          aria-label="Buscar produto"
+          autocomplete="off"
+        >
+        <button id="clearSearchBtn" class="clear-search-btn" title="Limpar busca" style="display: none;">&times;</button>
+      </div>
+
+      <!-- Ações do Header: Alternador de Tema e Botão do Carrinho -->
+      <div class="header-actions">
+        <button id="themeToggleBtn" class="action-btn theme-btn" aria-label="Alternar Modo Claro e Escuro" title="Alternar tema">
+          <span class="theme-icon light-icon" title="Modo Claro">☼</span>
+          <span class="theme-icon dark-icon" title="Modo Escuro">☾</span>
+        </button>
+
+        <button id="openCartBtn" class="action-btn cart-btn" aria-label="Abrir meu pedido">
+          <div class="cart-btn-inner">
+            <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span class="cart-btn-label">Meu Pedido</span>
+            <span id="cartBadge" class="cart-badge">0</span>
+          </div>
+          <span id="headerCartTotal" class="cart-btn-total">R$ 0,00</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navegação de Categorias com Rolagem Horizontal Suave -->
+    <nav class="categories-nav-wrapper" aria-label="Filtro de Categorias">
+      <div class="categories-nav" id="categoriesNav">
+        <button class="category-chip active" data-category="TODAS">
+          <span class="chip-dot"></span>
+          <span class="chip-text">Todas as Seleções</span>
+          <span class="chip-counter" id="countAll">150</span>
+        </button>
+        <button class="category-chip" data-category="ENTRADAS">
+          <span class="chip-text">Entradas</span>
+          <span class="chip-counter">30</span>
+        </button>
+        <button class="category-chip" data-category="PRATO PRINCIPAL">
+          <span class="chip-text">Prato Principal</span>
+          <span class="chip-counter">30</span>
+        </button>
+        <button class="category-chip" data-category="SOBREMESAS">
+          <span class="chip-text">Sobremesas</span>
+          <span class="chip-counter">30</span>
+        </button>
+        <button class="category-chip" data-category="BEBIDAS">
+          <span class="chip-text">Bebidas</span>
+          <span class="chip-counter">30</span>
+        </button>
+        <button class="category-chip" data-category="CARTA DE VINHOS">
+          <span class="chip-text">Carta de Vinhos</span>
+          <span class="chip-counter">30</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Banner Hero Editorial -->
+  <section class="hero-banner">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Tradição & Contemporaneidade</div>
+      <h2 class="hero-title">Cardápio Exclusivo à La Carte</h2>
+      <p class="hero-description">
+        Ingredientes frescos de pequenos produtores, massas artesanais abertas diariamente e cortes nobres grelhados na brasa perfumada. Faça seu pedido diretamente à cozinha.
+      </p>
+      <div class="hero-highlights">
+        <div class="highlight-item">
+          <strong>150</strong> Opções Artesanais
+        </div>
+        <div class="highlight-separator">|</div>
+        <div class="highlight-item">
+          <strong>100%</strong> Ingredientes Selecionados
+        </div>
+        <div class="highlight-separator">|</div>
+        <div class="highlight-item">
+          <strong>Atendimento</strong> Direto à Mesa
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Barra de Filtros Adicionais & Ordenação -->
+  <section class="controls-section">
+    <div class="controls-container">
+      <div class="results-info">
+        <span class="results-count" id="resultsCount">Exibindo 150 criações culinárias</span>
+        <span class="active-filter-indicator" id="activeFilterIndicator">Categoria: Todas</span>
+      </div>
+
+      <div class="filter-controls-group">
+        <!-- Faixa de Preço -->
+        <div class="control-item">
+          <label for="priceRangeFilter" class="control-label">Preço até: <strong id="priceRangeValue">R$ 1.900</strong></label>
+          <input type="range" id="priceRangeFilter" class="price-slider" min="0" max="1900" step="10" value="1900">
+        </div>
+
+        <!-- Ordenação -->
+        <div class="control-item">
+          <label for="sortOrderSelect" class="control-label">Ordenar por:</label>
+          <select id="sortOrderSelect" class="control-select">
+            <option value="padrao">Destaques do Chef (Padrão)</option>
+            <option value="preco-asc">Menor Preço</option>
+            <option value="preco-desc">Maior Preço</option>
+            <option value="nome-asc">Nome (A - Z)</option>
+          </select>
+        </div>
+
+        <!-- Botão Limpar Filtros -->
+        <button id="resetFiltersBtn" class="reset-filters-btn" title="Restaurar visualização completa">
+          Restaurar Filtros
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Área Principal: Grid de Produtos -->
+  <main class="main-content">
+    <div class="products-grid-container">
+      <div id="productsGrid" class="products-grid" aria-live="polite">
+        <!-- Cards injetados via JavaScript -->
+      </div>
+
+      <!-- Estado Vazio / Sem Resultados -->
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">🍽</div>
+        <h3 class="empty-state-title">Nenhum prato encontrado</h3>
+        <p class="empty-state-text">
+          Não localizamos nenhuma opção com os critérios selecionados. Experimente ajustar os termos de busca ou redefinir a faixa de valor.
+        </p>
+        <button id="emptyResetBtn" class="empty-state-btn">Ver Cardápio Completo</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Rodapé do Cardápio -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col brand-col">
+        <h3 class="footer-title">Casa Oliva Ristorante</h3>
+        <p class="footer-desc">
+          Gastronomia autoral ítalo-mediterrânea com toques contemporâneos e hospitalidade calorosa.
+        </p>
+        <div class="footer-meta">Horário: Terça a Domingo, das 12h às 23h30</div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-subtitle">Categorias</h4>
+        <ul class="footer-links">
+          <li><a href="#" data-footer-cat="ENTRADAS">Entradas Especiais (30)</a></li>
+          <li><a href="#" data-footer-cat="PRATO PRINCIPAL">Pratos Principais (30)</a></li>
+          <li><a href="#" data-footer-cat="SOBREMESAS">Sobremesas & Gelatos (30)</a></li>
+          <li><a href="#" data-footer-cat="BEBIDAS">Bebidas & Cafés (30)</a></li>
+          <li><a href="#" data-footer-cat="CARTA DE VINHOS">Carta de Vinhos Raros (30)</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-subtitle">Facilidade & Praticidade</h4>
+        <p class="footer-text">
+          Seu pedido é montado dinamicamente no navegador, salvo com segurança e despachado imediatamente para o setor responsável da cozinha e sommeliers.
+        </p>
+        <div class="footer-badge">Cardápio 100% Interativo em Vanilla JS</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Casa Oliva Ristorante. Todos os direitos reservados. Feito com amor pela gastronomia de verdade.</p>
+    </div>
+  </footer>
+
+  <!-- SIDEBAR / DRAWER DO CARRINHO ("MEU PEDIDO") -->
+  <div id="cartOverlay" class="cart-overlay" aria-hidden="true"></div>
+  <aside id="cartDrawer" class="cart-drawer" aria-label="Painel Meu Pedido" role="dialog" aria-modal="true">
+    <div class="drawer-header">
+      <div class="drawer-title-group">
+        <h2 class="drawer-title">Meu Pedido</h2>
+        <span id="drawerItemsCount" class="drawer-subtitle">0 itens selecionados</span>
+      </div>
+      <button id="closeCartBtn" class="close-drawer-btn" aria-label="Fechar pedido">&times;</button>
+    </div>
+
+    <!-- Lista Dinâmica de Itens do Carrinho -->
+    <div class="drawer-body">
+      <div id="cartItemsList" class="cart-items-list">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+
+      <!-- Carrinho Vazio -->
+      <div id="cartEmptyMessage" class="cart-empty-message">
+        <div class="empty-cart-icon">🛒</div>
+        <h3>Sua comanda está vazia</h3>
+        <p>Explore as 150 opções do cardápio e adicione suas entradas, pratos favoritos ou um bom vinho.</p>
+      </div>
+    </div>
+
+    <!-- Formulário do Cliente & Resumo Financeiro -->
+    <div class="drawer-footer">
+      <!-- Seção de Dados do Cliente -->
+      <div class="order-client-form">
+        <h4 class="form-section-title">Dados de Atendimento</h4>
+        
+        <div class="form-row">
+          <div class="form-field flex-2">
+            <label for="clientNameInput" class="field-label">Nome do Cliente <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="clientNameInput" 
+              class="form-input" 
+              placeholder="Ex: Dra. Mariana Ramos"
+              required
+            >
+            <span class="field-error" id="nameError">Por favor, informe seu nome.</span>
+          </div>
+
+          <div class="form-field flex-1">
+            <label for="tableNumberInput" class="field-label">Mesa nº <span class="required">*</span></label>
+            <input 
+              type="number" 
+              id="tableNumberInput" 
+              class="form-input" 
+              placeholder="Ex: 14"
+              min="1"
+              max="99"
+              required
+            >
+            <span class="field-error" id="tableError">Informe a mesa.</span>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="paymentMethodSelect" class="field-label">Forma de Pagamento <span class="required">*</span></label>
+          <select id="paymentMethodSelect" class="form-select" required>
+            <option value="" disabled selected>Selecione a forma de pagamento...</option>
+            <option value="Cartão de Crédito">Cartão de Crédito (Visa, Master, Amex)</option>
+            <option value="Cartão de Débito">Cartão de Débito</option>
+            <option value="Pix">Pix Instantâneo (QR Code na Mesa)</option>
+            <option value="Dinheiro">Dinheiro em Espécie</option>
+          </select>
+          <span class="field-error" id="paymentError">Selecione uma forma de pagamento.</span>
+        </div>
+
+        <div class="form-field">
+          <label for="orderNotesInput" class="field-label">Observações para a Cozinha <span class="optional">(opcional)</span></label>
+          <textarea 
+            id="orderNotesInput" 
+            class="form-textarea" 
+            rows="2" 
+            placeholder="Ex: Carne ao ponto para mal, sem cebola na entrada, taças de água gelada..."
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Resumo Financeiro e Taxa de Serviço de 10% -->
+      <div class="order-totals-card">
+        <div class="total-line">
+          <span class="total-label">Subtotal dos produtos</span>
+          <span id="cartSubtotal" class="total-value">R$ 0,00</span>
+        </div>
+
+        <div class="service-tip-box">
+          <label class="tip-checkbox-label">
+            <input type="checkbox" id="waiterTipCheckbox" class="tip-checkbox" checked>
+            <span class="checkbox-custom"></span>
+            <span class="tip-text-wrap">
+              <strong>Adicionar 10% da taxa de serviço do garçom</strong>
+              <small>Reconhecimento opcional pelo atendimento de nossa brigada</small>
+            </span>
+          </label>
+          <span id="waiterTipValue" class="tip-amount">+ R$ 0,00</span>
+        </div>
+
+        <div class="total-line final-total-line">
+          <span class="final-total-label">Valor Total Final</span>
+          <span id="cartGrandTotal" class="final-total-value">R$ 0,00</span>
+        </div>
+      </div>
+
+      <!-- Botões de Ação do Pedido -->
+      <div class="drawer-action-buttons">
+        <button id="clearCartBtn" class="btn-clear-cart" title="Limpar todos os pratos">Esvaziar</button>
+        <button id="checkoutBtn" class="btn-checkout" type="button">
+          <span>FINALIZAR PEDIDO</span>
+          <svg class="checkout-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MODAL DE CONFIRMAÇÃO DO PEDIDO (TELA DE SUCESSO) -->
+  <div id="confirmationModal" class="modal-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header-visual">
+        <div class="success-badge-icon">✓</div>
+        <span class="modal-kicker">Pedido Confirmado & Em Preparo</span>
+        <h3 id="modalOrderCode" class="modal-order-number">#1042</h3>
+        <p class="modal-timestamp" id="modalTimestamp">Enviado agora para o Chef</p>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-client-strip">
+          <div class="strip-item">
+            <span class="strip-label">Cliente</span>
+            <strong id="modalClientName">Mariana Ramos</strong>
+          </div>
+          <div class="strip-item">
+            <span class="strip-label">Mesa</span>
+            <strong id="modalTableNumber">Mesa 14</strong>
+          </div>
+          <div class="strip-item">
+            <span class="strip-label">Pagamento</span>
+            <strong id="modalPaymentMethod">Pix</strong>
+          </div>
+        </div>
+
+        <div class="modal-summary-section">
+          <h4 class="summary-heading">Resumo dos Pratos & Bebidas</h4>
+          <div id="modalItemsSummary" class="modal-items-summary">
+            <!-- Itens injetados via JS -->
+          </div>
+        </div>
+
+        <div id="modalNotesWrapper" class="modal-notes-box" style="display: none;">
+          <strong class="notes-title">Observações da Mesa:</strong>
+          <p id="modalNotesText" class="notes-content"></p>
+        </div>
+
+        <div class="modal-financial-breakdown">
+          <div class="breakdown-row">
+            <span>Subtotal:</span>
+            <strong id="modalSubtotal">R$ 0,00</strong>
+          </div>
+          <div class="breakdown-row" id="modalTipRow">
+            <span>Taxa do Garçom (10%):</span>
+            <strong id="modalTip">R$ 0,00</strong>
+          </div>
+          <div class="breakdown-row highlight-grand-total">
+            <span>Total Pago / A Pagar:</span>
+            <strong id="modalGrandTotal">R$ 0,00</strong>
+          </div>
+        </div>
+
+        <div class="kitchen-dispatch-card">
+          <div class="kitchen-pulse-dot"></div>
+          <div class="kitchen-text">
+            <strong>Ordem enviada com sucesso para a cozinha!</strong>
+            <p>Nossos sommeliers e cozinheiros já iniciaram o preparo das entradas e bebidas. Bom apetite!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="printOrderBtn" class="modal-secondary-btn">Imprimir Recibo Térmico</button>
+        <button id="closeModalBtn" class="modal-primary-btn">Novo Pedido / Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAQUINETA / IMPRESSORA TÉRMICA DO RECIBO -->
+  <div id="receiptBackdrop" class="receipt-backdrop" aria-hidden="true" role="dialog" aria-modal="true">
+    <section class="receipt-machine" aria-label="Recibo térmico da Casa Oliva">
+      <div class="receipt-machine-header">
+        <div>
+          <span class="machine-kicker">CAIXA 01</span>
+          <strong class="machine-title">Impressora de Comandas</strong>
+        </div>
+        <button id="closeReceiptBtn" class="close-drawer-btn" aria-label="Fechar recibo">&times;</button>
+      </div>
+
+      <div class="machine-slot">
+        <span class="machine-slot-light"></span>
+        <span>RECIBO SENDO EMITIDO</span>
+      </div>
+
+      <div id="receiptPaper" class="receipt-paper">
+        <div class="receipt-paper-top"></div>
+        <div class="receipt-paper-content">
+          <div class="receipt-brand">CASA OLIVA</div>
+          <div class="receipt-establishment">RISTORANTE & VINOTECA</div>
+          <div class="receipt-official-data">Rua das Oliveiras, 118 · Jardins · São Paulo/SP<br>Atendimento: (11) 3090-0118 · CNPJ 12.345.678/0001-90</div>
+          <div class="receipt-divider">--------------------------------</div>
+          <div class="receipt-meta">
+            <span id="receiptOrderNumber">COMANDA #0000</span>
+            <span id="receiptTimestamp">15/09/2026 · 00:00</span>
+          </div>
+          <div class="receipt-meta">
+            <span id="receiptClient">CLIENTE: —</span>
+            <span id="receiptTable">MESA: —</span>
+          </div>
+          <div class="receipt-divider">--------------------------------</div>
+          <div id="receiptItems" class="receipt-items"></div>
+          <div class="receipt-divider">--------------------------------</div>
+          <div class="receipt-total-line"><span>SUBTOTAL</span><strong id="receiptSubtotal">R$ 0,00</strong></div>
+          <div id="receiptTipLine" class="receipt-total-line"><span>TAXA GARÇOM (10%)</span><strong id="receiptTip">R$ 0,00</strong></div>
+          <div class="receipt-total-line receipt-grand-total"><span>TOTAL</span><strong id="receiptGrandTotal">R$ 0,00</strong></div>
+          <div class="receipt-payment" id="receiptPayment">PAGAMENTO: —</div>
+          <div class="receipt-note" id="receiptNotes" style="display:none;"></div>
+          <div class="receipt-divider">--------------------------------</div>
+          <div class="receipt-thanks">OBRIGADO PELA VISITA.<br>VOLTE SEMPRE.</div>
+          <div class="receipt-barcode" aria-hidden="true"><span>|||| ||| | |||| || ||| ||||</span><small>CASAOLIVA · EXPERIÊNCIA À MESA</small></div>
+        </div>
+        <div class="receipt-paper-bottom"></div>
+      </div>
+
+      <div class="receipt-actions">
+        <button id="downloadReceiptBtn" class="receipt-download-btn">Salvar / importar recibo <span aria-hidden="true">↓</span></button>
+        <button id="receiptPrintBtn" class="receipt-close-btn">Imprimir / PDF</button>
+        <button id="closeReceiptSecondaryBtn" class="receipt-close-btn">Voltar à confirmação</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Toast de Notificação Rápida -->
+  <div id="toastNotification" class="toast-container" aria-live="assertive"></div>
+
+  <!-- Script Principal com Arquitetura Modular em Vanilla JS -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
